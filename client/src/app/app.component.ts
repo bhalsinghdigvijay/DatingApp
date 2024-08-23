@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { User } from './_models/user';
@@ -9,7 +9,12 @@ import { HomeComponent } from "./home/home.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, HomeComponent],
+  imports: [
+    RouterOutlet, 
+    NavComponent, 
+    HomeComponent, 
+    RouterLink
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
