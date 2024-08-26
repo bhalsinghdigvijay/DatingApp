@@ -27,7 +27,8 @@
 
         @if (accountService.currentUser$ | async) {
             <div class="dropdown" ngbDropdown>
-                <a class="dropdown-toggle text-light" ngbDropdownToggle>
+                <img src="{{(accountService.currentUser$ | async).photoUrl}}" alt="{{(accountService.currentUser$ | async).username}}" class="img">
+                <a class="dropdown-toggle text-light mx-2" ngbDropdownToggle>
                     Welcome {{ (accountService.currentUser$ | async).username | titlecase }}
                 </a>
                 <div class="dropdown-menu mt-3" ngbDropdownMenu>

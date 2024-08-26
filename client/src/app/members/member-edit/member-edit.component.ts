@@ -8,12 +8,12 @@ import { FormGroupDirective, FormsModule, NgForm } from '@angular/forms';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule, NgIf } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { PhotoEditorComponent } from "../photo-editor/photo-editor.component";
 
 @Component({
   selector: 'app-member-edit',
   standalone: true,
-  imports: [FormsModule, NgbNavModule, CommonModule],
+  imports: [FormsModule, NgbNavModule, CommonModule, PhotoEditorComponent],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
 })
