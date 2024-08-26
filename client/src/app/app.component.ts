@@ -5,6 +5,7 @@ import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { User } from './_models/user';
 import { HomeComponent } from "./home/home.component";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { HomeComponent } from "./home/home.component";
     RouterOutlet, 
     NavComponent, 
     HomeComponent, 
-    RouterLink
+    RouterLink,
+    NgxSpinnerModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
