@@ -27,7 +27,7 @@
 
         @if (accountService.currentUser$ | async) {
             <div class="dropdown" ngbDropdown>
-                <img src="{{(accountService.currentUser$ | async).photoUrl}}" alt="{{(accountService.currentUser$ | async).username}}" class="img">
+                <img src="{{(accountService.currentUser$ | async).photoUrl || 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1'}}" alt="{{(accountService.currentUser$ | async).username}}" class="img">
                 <a class="dropdown-toggle text-light mx-2" ngbDropdownToggle>
                     Welcome {{ (accountService.currentUser$ | async).username | titlecase }}
                 </a>
