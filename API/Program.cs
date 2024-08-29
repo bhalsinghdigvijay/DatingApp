@@ -1,10 +1,12 @@
 using System.Text;
 using API.Data;
+using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.Middleware;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +29,8 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 builder.Services.AddScoped<ILikesRepository, LikesRepository>();
 
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
 builder.Services.AddScoped<LogUserActivity>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -39,6 +43,15 @@ builder.Services.AddDbContext<DataContext>(options => {
 
 builder.Services.AddCors();
 
+builder.Services.AddIdentityCore<AppUser>(opt => {
+    opt.Password.RequireNonAlphanumeric = false;
+})
+    .AddRoles<AppRole>()
+    .AddRoleManager<RoleManager<AppRole>>()
+    .AddSignInManager<SignInManager<AppUser>>()
+    .AddRoleValidator<RoleValidator<AppRole>>()
+    .AddEntityFrameworkStores<DataContext>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -49,6 +62,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
         };
     });
+
+builder.Services.AddAuthorization(opt => 
+{
+    opt.AddPolicy("RequiredAdminRole", policy => policy.RequireRole("Admin"));
+    opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -68,8 +87,10 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedUsers(context);
+    await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex)
 {

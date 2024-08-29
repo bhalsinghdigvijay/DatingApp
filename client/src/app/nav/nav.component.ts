@@ -7,6 +7,7 @@ import { User } from '../_models/user';
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { ToastrService } from 'ngx-toastr';
     AsyncPipe,
     RouterLink,
     RouterLinkActive,
-    TitleCasePipe
+    TitleCasePipe,
+    HasRoleDirective
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'

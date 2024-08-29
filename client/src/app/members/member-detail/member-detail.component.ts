@@ -6,11 +6,12 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxGalleryImage, NgxGalleryOptions, NgxGalleryAnimation, NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { TimeagoModule } from 'ngx-timeago';
 import { CommonModule, DatePipe } from '@angular/common';
+import { MemberMessagesComponent } from "../member-messages/member-messages.component";
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [NgbNavModule, NgxGalleryModule, TimeagoModule, DatePipe, CommonModule],
+  imports: [NgbNavModule, NgxGalleryModule, TimeagoModule, DatePipe, CommonModule, MemberMessagesComponent],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
