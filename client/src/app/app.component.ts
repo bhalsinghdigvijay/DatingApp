@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { User } from './_models/user';
 import { HomeComponent } from "./home/home.component";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PresenceService } from './_services/presence.service';
+import { TimeagoPipe } from 'ngx-timeago';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [TimeagoPipe]
 })
 export class AppComponent implements OnInit{
   title = 'The Dating App';
   users: any;
 
-  constructor(private accountService: AccountService){}
+  constructor(private accountService: AccountService, private presence: PresenceService){}
 
 
   ngOnInit(): void {
@@ -33,7 +36,11 @@ export class AppComponent implements OnInit{
 
   setCurrentUser(){
     const user: User = JSON.parse(localStorage.getItem("user"));
-    this.accountService.setCurrentUser(user);
+    if(user) {
+      this.accountService.setCurrentUser(user);
+      this.presence.createHubConnection(user);
+    }
+    
   }
 
   

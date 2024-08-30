@@ -4,14 +4,21 @@ import { MembersService } from '../../_services/members.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxGalleryImage, NgxGalleryOptions, NgxGalleryAnimation, NgxGalleryModule } from '@kolkov/ngx-gallery';
-import { TimeagoModule } from 'ngx-timeago';
+import { TimeagoModule, TimeagoPipe } from 'ngx-timeago';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MemberMessagesComponent } from "../member-messages/member-messages.component";
+import { PresenceService } from '../../_services/presence.service';
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [NgbNavModule, NgxGalleryModule, TimeagoModule, DatePipe, CommonModule, MemberMessagesComponent],
+  imports: [
+    NgbNavModule, 
+    NgxGalleryModule, 
+    DatePipe, 
+    CommonModule, 
+    MemberMessagesComponent
+  ],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
@@ -20,7 +27,11 @@ export class MemberDetailComponent implements OnInit{
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor(private memberService: MembersService, private route: ActivatedRoute){}
+  constructor(
+    private memberService: MembersService, 
+    private route: ActivatedRoute,
+    public presence: PresenceService
+  ){}
 
   ngOnInit(): void {
     this.loadMember();
