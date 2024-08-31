@@ -8,6 +8,7 @@ import { TimeagoModule, TimeagoPipe } from 'ngx-timeago';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MemberMessagesComponent } from "../member-messages/member-messages.component";
 import { PresenceService } from '../../_services/presence.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-detail',
@@ -26,14 +27,23 @@ export class MemberDetailComponent implements OnInit{
   member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+  active = 1;
 
   constructor(
     private memberService: MembersService, 
     private route: ActivatedRoute,
-    public presence: PresenceService
+    public presence: PresenceService,
+    private toastr: ToastrService
   ){}
 
   ngOnInit(): void {
+    
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        params.active ? this.active = Number.parseInt(params.active) : this.active = 1;
+      }
+    });
+
     this.loadMember();
     this.galleryOptions = [
       {
@@ -69,5 +79,15 @@ export class MemberDetailComponent implements OnInit{
       }
     });
   }
+
+  addLike(member: Member) {
+    this.memberService.addLike(member.username).subscribe({
+      next: () => {
+        this.toastr.success("You have liked " + member.knownAs);
+      }
+    });
+  }
+
+  
 
 }

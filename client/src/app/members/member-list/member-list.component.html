@@ -59,6 +59,7 @@
                     type="button"
                     class="btn btn-primary"
                     name="orderBy"
+                    [style.backgroundColor]="userParams.orderBy === 'lastActive' ? 'brown' : '' "
                     (click)="sortMembers($event)"
                     value="lastActive"
                 >Last Active</button>
@@ -67,6 +68,7 @@
                     type="button"
                     class="btn btn-primary"
                     name="orderBy"
+                    [style.backgroundColor]="userParams.orderBy === 'created' ? 'brown' : '' "
                     (click)="sortMembers($event)"
                     value="created"
                 >Newest Members</button>

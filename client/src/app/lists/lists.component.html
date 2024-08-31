@@ -9,12 +9,14 @@
                 <button 
                     class="btn btn-primary"
                     value="liked"
+                    [style.backgroundColor]="predicate === 'liked' ? 'brown' : '' "
                     (click)="toggleLikes($event)"
                 >Members I like</button>
                 <button 
                     class="btn btn-primary"
                     value="likedBy"
                     (click)="toggleLikes($event)"
+                    [style.backgroundColor]="predicate === 'likedBy' ? 'brown' : '' "
                 >Members who like me</button>
             </div>
         </div>
